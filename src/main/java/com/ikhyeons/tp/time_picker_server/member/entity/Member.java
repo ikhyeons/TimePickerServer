@@ -1,7 +1,10 @@
 package com.ikhyeons.tp.time_picker_server.member.entity;
 
+import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -25,6 +28,9 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "member")
+    private List<Request> request;
+
     //social login
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -34,7 +40,13 @@ public class Member {
     private String socialId;
 
     @Builder
-    public Member() {
-        //this.name = name;
+    public Member(String id, String password, String name, Role role, List<Request> request, SocialType socialType, String socialId) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+        this.request = request;
+        this.socialType = socialType;
+        this.socialId = socialId;
     }
 }
