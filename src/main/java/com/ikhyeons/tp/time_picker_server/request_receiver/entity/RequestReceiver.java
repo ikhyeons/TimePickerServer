@@ -5,6 +5,8 @@ import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.request.entity.Type;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Getter
 @Entity

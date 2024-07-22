@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @DisplayName("스케쥴 테스트")
-@Rollback(value = false)
 class ScheduleServiceTest {
     @Autowired
     private ScheduleService scheduleService;
@@ -39,6 +38,21 @@ class ScheduleServiceTest {
         //when
         Schedule savedSchedule = scheduleService.saveSchedule(schedule);
         //then
-        assertThat(scheduleRepository.findById(savedSchedule.getScheduleId()).isPresent());
+        assertThat(scheduleRepository.findById(savedSchedule.getScheduleId()).isPresent()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스케쥴 삭제")
+    void 스케쥴삭제() throws Exception{
+        //given
+        Member member = Member.createMemberIkhyeon();
+        Member joinedMember = memberService.join(member);
+        Schedule schedule = Schedule.createScheduleChejo(joinedMember);
+        Schedule savedSchedule = scheduleService.saveSchedule(schedule);
+        //when
+        scheduleService.deleteSchedule(schedule);
+        //then
+        assertThat(scheduleRepository.findById(savedSchedule.getScheduleId()).isPresent()).isFalse();
+
     }
 }
