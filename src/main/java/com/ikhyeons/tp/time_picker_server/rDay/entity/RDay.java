@@ -20,6 +20,7 @@ public class RDay {
     private Request request;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Day day;
 
 

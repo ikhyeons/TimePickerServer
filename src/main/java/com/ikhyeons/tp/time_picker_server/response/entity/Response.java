@@ -20,6 +20,7 @@ public class Response {
     private Member member;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @ManyToOne

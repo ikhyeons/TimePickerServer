@@ -1,9 +1,14 @@
 package com.ikhyeons.tp.time_picker_server.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
+import com.ikhyeons.tp.time_picker_server.schedule.entity.Schedule;
+import com.ikhyeons.tp.time_picker_server.team.entity.Team;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,7 +21,7 @@ public class Member {
     private Long memberId;
 
     @Column(unique = true, nullable = false)
-    private String id;
+    private String mid;
 
     @Column(nullable = false)
     private String password;
@@ -29,24 +34,38 @@ public class Member {
     private Role role;
 
     @OneToMany(mappedBy = "member")
-    private List<Request> request;
+    private List<Request> requestList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Schedule> scheduleList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Team> TeamList = new ArrayList<>();
 
     //social login
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    @Column(nullable = false)
     private String socialId;
 
+    public void addSchedule(Schedule schedule){
+        this.scheduleList.add(schedule);
+    }
+    public void deleteSchedule(Schedule schedule){
+        this.scheduleList.remove(schedule);
+    }
+
     @Builder
-    public Member(String id, String password, String name, Role role, List<Request> request, SocialType socialType, String socialId) {
-        this.id = id;
+    public Member(String mid, String password, String name, Role role, SocialType socialType, String socialId) {
+        this.mid = mid;
         this.password = password;
         this.name = name;
         this.role = role;
-        this.request = request;
         this.socialType = socialType;
         this.socialId = socialId;
+    }
+
+    public static Member createMemberIkhyeon(){
+        return Member.builder().mid("skantrkwl789").name("성익현").role(Role.USER).password("tjddlrgus33!").build();
     }
 }

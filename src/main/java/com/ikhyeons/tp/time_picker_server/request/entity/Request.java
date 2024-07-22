@@ -8,6 +8,7 @@ import com.ikhyeons.tp.time_picker_server.rDay.entity.RDay;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,24 +25,23 @@ public class Request {
     private Member member;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @Column(nullable = false)
     private String result;
 
     @OneToMany(mappedBy = "request")
-    private List<RDay> dayList;
+    private List<RDay> dayList = new ArrayList<>();
 
     @OneToMany(mappedBy = "request")
-    private List<RDate> dateList;
+    private List<RDate> dateList= new ArrayList<>();
 
 
     @Builder
-    public Request(Member member, Type type, String result, List<RDay> dayList, List<RDate> dateList) {
+    public Request(Member member, Type type, String result) {
         this.member = member;
         this.type = type;
         this.result = result;
-        this.dayList = dayList;
-        this.dateList = dateList;
     }
 }
