@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@DisplayName("팀 테스트")
 class TeamServiceTest {
     @Autowired
     private MemberService memberService;

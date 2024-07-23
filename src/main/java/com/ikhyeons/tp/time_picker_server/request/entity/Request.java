@@ -59,8 +59,7 @@ public class Request {
     public void cancelRequest(){
         this.isCancel = true;
     }
-    public static Request makeRequest(Member member) {
-
+    public static Request makeDayRequest(Member member) {
         return Request.builder()
                 .member(member)
                 .title("회의 일정 정하기")
@@ -72,12 +71,40 @@ public class Request {
                 .isCancel(false)
                 .build();
     }
+    public static Request makeDateRequest(Member member) {
+        return Request.builder()
+                .member(member)
+                .title("회의 일정 정하기")
+                .description("자동자 개발 관련 회의 일정을 잡아야 합니다.")
+                .deadline("2024-07-22")
+                .type(Type.DATE)
+                .dateList(new ArrayList<RDate>())
+                .receiverList(new ArrayList<RequestReceiver>())
+                .isCancel(false)
+                .build();
+    }
 
     public void addReceiver(RequestReceiver requestReceiver){
         this.receiverList.add(requestReceiver);
     }
     public void deleteReceiver(RequestReceiver requestReceiver){
         this.receiverList.remove(requestReceiver);
+    }
+
+    public void addRDay(RDay rDay){
+        this.dayList.add(rDay);
+    }
+
+    public void deleteRDay(RDay rDay){
+        this.dayList.remove(rDay);
+    }
+
+    public void addRDate(RDate rDate){
+        this.dateList.add(rDate);
+    }
+
+    public void deleteRDate(RDate rDate){
+        this.dateList.remove(rDate);
     }
     @Builder
     public Request(Member member, Type type, String title, String description, String deadline, List<RequestReceiver> receiverList, List<RDay> dayList, List<RDate> dateList, String result, boolean isCancel) {

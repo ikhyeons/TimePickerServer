@@ -26,7 +26,8 @@ class RequestServiceTest {
     void 요청생성() throws Exception{
        //given
         Member ikhyeon = Member.createMemberIkhyeon();
-        Request request = Request.makeRequest(ikhyeon);
+        Request request = Request.makeDayRequest(ikhyeon);
+
        //when
         Request savedRequest = requestService.createRequest(request);
        //then
@@ -37,7 +38,7 @@ class RequestServiceTest {
     void 요청취소() throws Exception{
         //given
         Member ikhyeon = Member.createMemberIkhyeon();
-        Request request = Request.makeRequest(ikhyeon);
+        Request request = Request.makeDayRequest(ikhyeon);
         //when
         Request cancelRequest = requestService.cancelRequest(request);
         //then

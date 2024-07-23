@@ -39,7 +39,7 @@ class RequestReceiverServiceTest {
         Member ikhyeon = Member.createMemberIkhyeon();
         Member savedMember = memberService.join(ikhyeon);
 
-        Request request = Request.makeRequest(savedMember);
+        Request request = Request.makeDayRequest(savedMember);
         Request savedRequest = requestService.createRequest(request);
 
         RequestReceiver requestReceiver = RequestReceiver.builder().member(savedMember).request(savedRequest).build();
@@ -59,7 +59,7 @@ class RequestReceiverServiceTest {
         Member savedIkhyeon = memberService.join(ikhyeon);
         Member savedSuhyeon = memberService.join(suhyeon);
 
-        Request request = Request.makeRequest(savedIkhyeon);
+        Request request = Request.makeDayRequest(savedIkhyeon);
         Request savedRequest = requestService.createRequest(request);
 
         RequestReceiver requestReceiverIkhyeon= RequestReceiver.builder().member(savedIkhyeon).request(savedRequest).build();
