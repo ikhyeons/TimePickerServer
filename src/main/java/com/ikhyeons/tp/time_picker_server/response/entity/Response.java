@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class Response {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

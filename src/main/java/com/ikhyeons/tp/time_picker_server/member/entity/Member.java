@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

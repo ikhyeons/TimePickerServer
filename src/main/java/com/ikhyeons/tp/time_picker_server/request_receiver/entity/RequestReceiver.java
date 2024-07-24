@@ -11,6 +11,7 @@ import org.hibernate.annotations.CascadeType;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class RequestReceiver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

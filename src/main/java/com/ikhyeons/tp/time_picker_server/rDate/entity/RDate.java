@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class RDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

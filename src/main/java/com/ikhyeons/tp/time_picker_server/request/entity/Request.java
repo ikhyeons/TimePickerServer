@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

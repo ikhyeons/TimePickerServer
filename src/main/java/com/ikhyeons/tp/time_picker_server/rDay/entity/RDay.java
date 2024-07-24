@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class RDay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

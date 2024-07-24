@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Entity
 @ToString
+@NoArgsConstructor
 public class TeamMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
