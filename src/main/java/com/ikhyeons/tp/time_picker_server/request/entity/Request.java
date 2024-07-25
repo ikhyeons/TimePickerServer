@@ -25,7 +25,6 @@ public class Request {
     private Long requestId;
 
     @ManyToOne
-    @Cascade(CascadeType.ALL)
     @JoinColumn(name ="member_id")
     private Member member;
 
@@ -43,12 +42,15 @@ public class Request {
     private String deadline;
 
     @OneToMany(mappedBy = "request")
+    @Cascade(CascadeType.ALL)
     private List<RequestReceiver> receiverList;
 
     @OneToMany(mappedBy = "request")
+    @Cascade(CascadeType.ALL)
     private List<RDay> dayList;
 
     @OneToMany(mappedBy = "request")
+    @Cascade(CascadeType.ALL)
     private List<RDate> dateList;
 
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-package com.ikhyeons.tp.time_picker_server.rDay;
+package com.ikhyeons.tp.time_picker_server.rDay.controller;
 
 import com.ikhyeons.tp.time_picker_server.rDate.entity.RDate;
 import com.ikhyeons.tp.time_picker_server.rDate.rDateDTO.RDateDTO;
@@ -9,10 +9,7 @@ import com.ikhyeons.tp.time_picker_server.rDay.service.RDayService;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.request.repository.RequestRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +26,7 @@ public class RDayController {
         return savedRDay.getRDayId();
     }
 
-    @PostMapping("/rDay")
+    @DeleteMapping("/rDay")
     public boolean deleteRDay(@RequestParam Long rDayId){
         RDay rDay = rDayRepository.findById(rDayId).get();
         boolean isDelete = rDayService.removeRDay(rDay);
