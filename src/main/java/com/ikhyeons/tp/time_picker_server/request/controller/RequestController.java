@@ -33,6 +33,7 @@ public class RequestController {
     public Long deleteRequest(@RequestParam Long requestId){
         Request request = requestRepository.findById(requestId).get();
         Request savedRequest = requestService.cancelRequest(request);
+
         return savedRequest.getRequestId();
     }
 }
