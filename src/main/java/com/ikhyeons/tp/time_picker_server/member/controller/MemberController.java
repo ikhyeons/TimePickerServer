@@ -7,6 +7,7 @@ import com.ikhyeons.tp.time_picker_server.member.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,22 +18,16 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @GetMapping("/member/checkDuplicate")
     public boolean checkDuplicate(@RequestParam("mid") String mid){
         boolean isDuplicated = memberService.checkDuplication(mid);
         return isDuplicated;
     }
 
-    //수정해야 함.
-    @GetMapping("/member/login")
-    public Object login(@RequestBody MemberDTO postData){
-        boolean isLogin = memberService.login(postData.getMid(), postData.getPassword());
-        return isLogin;
-    }
-
     @PostMapping("/member/join")
     public Object join(@RequestBody MemberDTO postData){
-        Member member = Member.builder().mid(postData.getMid()).password(postData.getPassword()).name(postData.getName()).role(Role.USER).build();
+        Member member = Member.builder().mid(postData.getMid()).password(bCryptPasswordEncoder.encode(postData.getPassword())).name(postData.getName()).role("USER").build();
         try{
             Member savedMember = memberService.join(member);
             return savedMember.getMemberId();

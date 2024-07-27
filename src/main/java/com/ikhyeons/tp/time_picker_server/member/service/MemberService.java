@@ -21,9 +21,4 @@ public class MemberService implements IMemberService{
     public boolean checkDuplication (String mid){
         return memberRepository.findOneByMid(mid).isPresent();
     }
-
-    @Override
-    public boolean login(String mid, String password) {
-        return false;
-    }
 }

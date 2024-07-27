@@ -55,7 +55,7 @@ class RequestReceiverServiceTest {
     void 요청수령자삭제() throws Exception {
         //given
         Member ikhyeon = Member.createMemberIkhyeon();
-        Member suhyeon = Member.builder().mid("su2").role(Role.USER).password("supass").name("박수현").build();
+        Member suhyeon = Member.builder().mid("su2").role("USER").password("supass").name("박수현").build();
         Member savedIkhyeon = memberService.join(ikhyeon);
         Member savedSuhyeon = memberService.join(suhyeon);
 

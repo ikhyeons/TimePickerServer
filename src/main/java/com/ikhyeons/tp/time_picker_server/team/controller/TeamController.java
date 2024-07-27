@@ -7,6 +7,7 @@ import com.ikhyeons.tp.time_picker_server.team.repository.TeamRepository;
 import com.ikhyeons.tp.time_picker_server.team.service.TeamService;
 import com.ikhyeons.tp.time_picker_server.team.teamDTO.TeamDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,8 @@ public class TeamController {
 
     @PostMapping("/team")
     public Long createTeam(@RequestBody TeamDTO postData){
-        Member maker =  memberRepository.findById(postData.getMemberId()).get();
+        String makerMid = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member maker = memberRepository.findOneByMid(makerMid).get();
         String teamName = postData.getName();
         Team team = Team.builder().member(maker).name(teamName).build();
         return teamService.saveTeam(team).getTeamId();

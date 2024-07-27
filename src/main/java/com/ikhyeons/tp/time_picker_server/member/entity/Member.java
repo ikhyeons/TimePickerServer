@@ -31,8 +31,7 @@ public class Member {
     private String name;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
     @OneToMany(mappedBy = "member")
     private List<Request> requestList = new ArrayList<>();
@@ -57,7 +56,7 @@ public class Member {
     }
 
     @Builder
-    public Member(String mid, String password, String name, Role role, SocialType socialType, String socialId) {
+    public Member(String mid, String password, String name, String role, SocialType socialType, String socialId) {
         this.mid = mid;
         this.password = password;
         this.name = name;
@@ -67,6 +66,6 @@ public class Member {
     }
 
     public static Member createMemberIkhyeon(){
-        return Member.builder().mid("skantrkwl789").name("성익현").role(Role.USER).password("tjddlrgus33!").build();
+        return Member.builder().mid("skantrkwl789").name("성익현").role("USER").password("tjddlrgus33!").build();
     }
 }

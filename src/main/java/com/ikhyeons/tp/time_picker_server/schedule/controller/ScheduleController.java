@@ -8,6 +8,7 @@ import com.ikhyeons.tp.time_picker_server.schedule.repository.ScheduleRepository
 import com.ikhyeons.tp.time_picker_server.schedule.scheduleDTO.ScheduleDTO;
 import com.ikhyeons.tp.time_picker_server.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +20,8 @@ public class ScheduleController {
 
     @PostMapping("/schedule")
     public Long createSchedule(@RequestBody ScheduleDTO postData){
-        Member member = memberRepository.findById(postData.getMemberId()).get();
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findOneByMid(memberId).get();
 
         Schedule schedule;
         if(postData.getType() == Type.DATE)

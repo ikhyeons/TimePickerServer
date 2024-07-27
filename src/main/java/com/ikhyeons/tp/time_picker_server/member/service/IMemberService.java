@@ -5,6 +5,4 @@ import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 public interface IMemberService {
     public Member join(Member member);
     public boolean checkDuplication(String mid);
-
-    public boolean login(String mid, String password);
 }

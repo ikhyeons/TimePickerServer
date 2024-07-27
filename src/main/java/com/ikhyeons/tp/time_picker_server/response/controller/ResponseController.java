@@ -12,6 +12,7 @@ import com.ikhyeons.tp.time_picker_server.response.repository.ResponseRepository
 import com.ikhyeons.tp.time_picker_server.response.responseDTO.ResponseDTO;
 import com.ikhyeons.tp.time_picker_server.response.service.ResponseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +26,9 @@ public class ResponseController {
 
     @PostMapping("/response")
     public Long createResponse(@RequestBody ResponseDTO postData){
-        Member member = memberRepository.findById(postData.getMemberId()).get();
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findOneByMid(memberId).get();
+
         Response response;
         Long responseId;
 

@@ -16,7 +16,7 @@ public class MemberDTO {
     private String mid;
     private String password;
     private String name;
-    private Role role;
+    private String role;
     private List<Request> requestList = new ArrayList<>();
     private List<Schedule> scheduleList = new ArrayList<>();
     private List<Team> TeamList = new ArrayList<>();

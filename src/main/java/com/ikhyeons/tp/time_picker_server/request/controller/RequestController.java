@@ -18,6 +18,7 @@ import com.ikhyeons.tp.time_picker_server.request_receiver.entity.RequestReceive
 import com.ikhyeons.tp.time_picker_server.request_receiver.receiverDTO.ReceiverDTO;
 import com.ikhyeons.tp.time_picker_server.request_receiver.repository.RequestReceiverRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sound.midi.Receiver;
@@ -49,7 +50,8 @@ public class RequestController {
 
     @PostMapping("/request")
     public Long createRequest(@RequestBody RequestDTO postData){
-        Member member = memberRepository.findById(postData.getMemberId()).get();
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findOneByMid(memberId).get();
 
         Request request;
         if(postData.getType() == Type.DAY){
