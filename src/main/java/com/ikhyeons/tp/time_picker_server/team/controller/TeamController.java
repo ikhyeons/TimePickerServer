@@ -19,11 +19,6 @@ public class TeamController {
     private final TeamRepository teamRepository;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/team")
-    public String team(){
-        return "gd";
-    }
-
     @PostMapping("/team")
     public Long createTeam(@RequestBody TeamDTO postData){
         String makerMid = SecurityContextHolder.getContext().getAuthentication().getName();

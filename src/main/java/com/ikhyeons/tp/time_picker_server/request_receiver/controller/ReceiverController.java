@@ -30,7 +30,7 @@ public class ReceiverController {
         return savedReceiver.getRequestReceiverId();
     }
 
-    @GetMapping("/receiver")
+    @DeleteMapping("/receiver")
     public boolean removeReceiver(@RequestParam Long receiverId){
         RequestReceiver requestReceiver = requestReceiverRepository.findById(receiverId).get();
         boolean isDelete = requestReceiverService.deleteRequestReceiver(requestReceiver);
