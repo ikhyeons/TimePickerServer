@@ -2,8 +2,11 @@ package com.ikhyeons.tp.time_picker_server.schedule.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ikhyeons.tp.time_picker_server.member.entity.Member;
+import com.ikhyeons.tp.time_picker_server.schedule.scheduleDTO.ScheduleDTO;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -48,5 +51,17 @@ public class Schedule {
         this.type = type;
         this.date = date;
         this.day = day;
+    }
+
+    public ScheduleDTO toDTO(){
+        ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setScheduleId(this.scheduleId);
+        scheduleDTO.setDate(this.date);
+        scheduleDTO.setDay(this.day);
+        scheduleDTO.setTitle(this.title);
+        scheduleDTO.setDescription(this.description);
+        scheduleDTO.setMemberId(this.member.getMemberId());
+        scheduleDTO.setType(this.type);
+        return scheduleDTO;
     }
 }

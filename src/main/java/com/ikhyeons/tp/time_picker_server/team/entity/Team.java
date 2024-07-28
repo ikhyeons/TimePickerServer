@@ -2,6 +2,7 @@ package com.ikhyeons.tp.time_picker_server.team.entity;
 
 import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 import com.ikhyeons.tp.time_picker_server.schedule.entity.Schedule;
+import com.ikhyeons.tp.time_picker_server.team.teamDTO.TeamDTO;
 import com.ikhyeons.tp.time_picker_server.teamMember.entity.TeamMember;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,9 +32,16 @@ public class Team {
         return Team.builder().name("용마고").build();
     }
     @Builder
-
     public Team(Member member, String name) {
         this.member = member;
         this.name = name;
+    }
+
+    public TeamDTO toDTO(){
+        TeamDTO teamDTO = new TeamDTO();
+        teamDTO.setTeamId(this.teamId);
+        teamDTO.setMemberId(this.getMember().getMemberId());
+        teamDTO.setName(this.name);
+        return teamDTO;
     }
 }

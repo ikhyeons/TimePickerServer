@@ -5,6 +5,7 @@ import com.ikhyeons.tp.time_picker_server.member.entity.Role;
 import com.ikhyeons.tp.time_picker_server.member.entity.SocialType;
 import com.ikhyeons.tp.time_picker_server.rDate.entity.RDate;
 import com.ikhyeons.tp.time_picker_server.rDay.entity.RDay;
+import com.ikhyeons.tp.time_picker_server.request.requestDTO.RequestDTO;
 import com.ikhyeons.tp.time_picker_server.request_receiver.entity.RequestReceiver;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -59,6 +61,22 @@ public class Request {
     @Column(nullable = true)
     private String result;
 
+    public RequestDTO toDTO(){
+        RequestDTO requestDTO = new RequestDTO();
+        requestDTO.setRequestId(this.requestId);
+        requestDTO.setMemberId(this.member.getMemberId());
+        requestDTO.setTitle(this.title);
+        requestDTO.setDescription(this.description);
+        requestDTO.setDeadline(this.deadline);
+        requestDTO.setCancel(this.isCancel);
+        requestDTO.setType(this.type);
+        requestDTO.setDayList(this.dayList.stream().map(data -> data.toDTO()).collect(Collectors.toList()));
+        requestDTO.setDateList(this.dateList.stream().map(data->data.toDTO()).collect(Collectors.toList()));
+        requestDTO.setReceiverIdList(this.receiverList.stream().map(data->data.getRequestReceiverId()).collect(Collectors.toList()));
+        requestDTO.setResult(this.result);
+
+        return requestDTO;
+    }
     public void cancelRequest(){
         this.isCancel = true;
     }

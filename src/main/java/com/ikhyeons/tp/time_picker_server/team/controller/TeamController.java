@@ -11,6 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +22,13 @@ public class TeamController {
     private final TeamService teamService;
     private final TeamRepository teamRepository;
     private final MemberRepository memberRepository;
+
+    @GetMapping("/team")
+    public List<TeamDTO> getTeam(){
+        String member = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member requestor = memberRepository.findOneByMid(member).get();
+        return teamService.getTeamLIst(requestor.getMemberId());
+    }
 
     @PostMapping("/team")
     public Long createTeam(@RequestBody TeamDTO postData){
@@ -34,4 +45,6 @@ public class TeamController {
         boolean isDeleted = teamService.deleteTeam(team);
         return isDeleted;
     }
+
+
 }

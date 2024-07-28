@@ -40,7 +40,7 @@ public class Member {
     private List<Schedule> scheduleList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Team> TeamList = new ArrayList<>();
+    private List<Team> teamList = new ArrayList<>();
 
     //social login
     @Enumerated(EnumType.STRING)

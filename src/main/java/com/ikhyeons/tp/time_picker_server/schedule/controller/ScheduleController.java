@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ScheduleController {
@@ -18,6 +20,14 @@ public class ScheduleController {
     private final ScheduleRepository scheduleRepository;
     private final MemberRepository memberRepository;
 
+
+    @GetMapping("/schedule")
+    public List<ScheduleDTO> getScheduleList(){
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findOneByMid(memberId).get();
+
+        return scheduleService.getScheduleList(member.getMemberId());
+    }
     @PostMapping("/schedule")
     public Long createSchedule(@RequestBody ScheduleDTO postData){
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();

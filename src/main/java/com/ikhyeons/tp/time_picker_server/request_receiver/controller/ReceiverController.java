@@ -5,14 +5,17 @@ import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 import com.ikhyeons.tp.time_picker_server.member.repository.MemberRepository;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.request.repository.RequestRepository;
+import com.ikhyeons.tp.time_picker_server.request.requestDTO.RequestDTO;
 import com.ikhyeons.tp.time_picker_server.request_receiver.entity.RequestReceiver;
 import com.ikhyeons.tp.time_picker_server.request_receiver.receiverDTO.ReceiverDTO;
 import com.ikhyeons.tp.time_picker_server.request_receiver.repository.RequestReceiverRepository;
 import com.ikhyeons.tp.time_picker_server.request_receiver.service.RequestReceiverService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sound.midi.Receiver;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +24,13 @@ public class ReceiverController {
     private final RequestReceiverRepository requestReceiverRepository;
     private final MemberRepository memberRepository;
     private final RequestRepository requestRepository;
+
+    @GetMapping("/receiveRequest")
+    public List<RequestDTO> findGetRequest(){
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findOneByMid(memberId).get();
+        return requestReceiverService.findMyGetRequest(member);
+    }
     @PostMapping("/receiver")
     public Long addReceiver(@RequestBody ReceiverDTO postData){
         Member member = memberRepository.findById(postData.getMemberId()).get();

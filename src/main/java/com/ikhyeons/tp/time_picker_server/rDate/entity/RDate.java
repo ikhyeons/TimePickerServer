@@ -1,5 +1,6 @@
 package com.ikhyeons.tp.time_picker_server.rDate.entity;
 
+import com.ikhyeons.tp.time_picker_server.rDate.rDateDTO.RDateDTO;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.response.entity.Response;
 import jakarta.persistence.*;
@@ -38,7 +39,15 @@ public class RDate {
     public static RDate rDate240711(Request request){
         return RDate.builder().request(request).date("2024-07-11").build();
     }
+    public RDateDTO toDTO(){
+        RDateDTO rDateDTO = new RDateDTO();
 
+        rDateDTO.setRDateId(this.rDateId);
+        rDateDTO.setDate(this.date);
+        rDateDTO.setRequestId(this.request.getRequestId());
+
+        return rDateDTO;
+    }
     @Builder
     public RDate(Request request, String date) {
         this.request = request;

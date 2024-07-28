@@ -1,5 +1,6 @@
 package com.ikhyeons.tp.time_picker_server.rDay.entity;
 
+import com.ikhyeons.tp.time_picker_server.rDay.rDayDTO.RDayDTO;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.request.entity.Type;
 import com.ikhyeons.tp.time_picker_server.response.entity.Response;
@@ -43,6 +44,13 @@ public class RDay {
         return RDay.builder().request(request).day(Day.수).build();
     }
 
+    public RDayDTO toDTO(){
+        RDayDTO rDayDTO = new RDayDTO();
+        rDayDTO.setRDayId(this.rDayId);
+        rDayDTO.setDay(this.day);
+        rDayDTO.setRequestId(this.request.getRequestId());
+        return rDayDTO;
+    }
 
 
     @Builder

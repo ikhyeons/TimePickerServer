@@ -7,6 +7,7 @@ import com.ikhyeons.tp.time_picker_server.rDay.entity.RDay;
 import com.ikhyeons.tp.time_picker_server.rDay.rDayDTO.RDayDTO;
 import com.ikhyeons.tp.time_picker_server.request.entity.Type;
 import com.ikhyeons.tp.time_picker_server.request_receiver.entity.RequestReceiver;
+import com.ikhyeons.tp.time_picker_server.request_receiver.receiverDTO.ReceiverDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;

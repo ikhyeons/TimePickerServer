@@ -48,6 +48,17 @@ public class RequestController {
         return RequestReceiver.builder().request(requestRepository.findById(requestId).get()).member(memberRepository.findById(memberId).get()).build();
     }
 
+    @GetMapping("/sendRequest")
+    public List<RequestDTO> getSendRequestList(){
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findOneByMid(memberId).get();
+
+        List<RequestDTO> requestList = requestService.getSendRequestList(member);
+
+        return requestList;
+    }
+
+
     @PostMapping("/request")
     public Long createRequest(@RequestBody RequestDTO postData){
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
