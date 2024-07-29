@@ -1,24 +1,48 @@
 package com.ikhyeons.tp.time_picker_server.response.service;
 
+import com.ikhyeons.tp.time_picker_server.rDate.entity.RDate;
+import com.ikhyeons.tp.time_picker_server.rDate.repository.RDateRepository;
+import com.ikhyeons.tp.time_picker_server.rDay.entity.RDay;
+import com.ikhyeons.tp.time_picker_server.rDay.repository.RDayRepository;
 import com.ikhyeons.tp.time_picker_server.response.entity.Response;
+import com.ikhyeons.tp.time_picker_server.response.entity.Type;
 import com.ikhyeons.tp.time_picker_server.response.repository.ResponseRepository;
+import com.ikhyeons.tp.time_picker_server.response.responseDTO.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ResponseService {
     private final ResponseRepository responseRepository;
+    private final RDateRepository rDateRepository;
+    private final RDayRepository rDayRepository;
+
+
+    public List<ResponseDTO> getResponseList(Type type, Long id){
+        List<Response> responseList;
+        if(type == Type.Day){
+            responseList = responseRepository.findAllByType(type).stream().filter(data->data.getRDay().getRDayId() == id).collect(Collectors.toList());
+        } else {
+            responseList = responseRepository.findAllByType(type).stream().filter(data->data.getRDate().getRDateId() == id).collect(Collectors.toList());
+        }
+
+        List<ResponseDTO> responseDTOList = responseList.stream().map(data->data.toDTO()).collect(Collectors.toList());
+        return responseDTOList;
+    }
 
     public Response addDayResponse(Response response){
-        response.getRDay().addResponse(response);
         return responseRepository.save(response);
     }
 
     public boolean removeDayResponse(Response response){
         try{
             responseRepository.delete(response);
-            response.getRDay().deleteResponse(response);
             return true;
         } catch (Exception e){
             return false;
@@ -26,14 +50,12 @@ public class ResponseService {
     }
 
     public Response addDateResponse(Response response){
-        response.getRDate().addResponse(response);
         return responseRepository.save(response);
     }
 
     public boolean removeDateResponse(Response response){
         try{
             responseRepository.delete(response);
-            response.getRDate().deleteResponse(response);
             return true;
         } catch (Exception e){
             return false;

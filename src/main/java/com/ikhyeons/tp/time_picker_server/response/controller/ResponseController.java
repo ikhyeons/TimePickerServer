@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ResponseController {
@@ -24,6 +26,11 @@ public class ResponseController {
     private final RDayRepository rDayRepository;
     private final RDateRepository rDateRepository;
 
+    @GetMapping("/response")
+    public List<ResponseDTO> getResponse(@RequestParam("type") Type type, @RequestParam("requestTimeId") Long rTimeId){
+        return responseService.getResponseList(type, rTimeId);
+    }
+
     @PostMapping("/response")
     public Long createResponse(@RequestBody ResponseDTO postData){
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -32,12 +39,13 @@ public class ResponseController {
         Response response;
         Long responseId;
 
+        System.out.println("postData.toString() = " + postData.toString());
         if(postData.getType() == Type.Day){
-            RDay rDay = rDayRepository.findById(postData.getRDayId()).get();
+            RDay rDay = rDayRepository.findById(postData.getResponseDayId()).get();
             response = Response.builder().member(member).type(Type.Day).rDay(rDay).responseData(postData.getResponseData()).build();
             responseId = responseService.addDayResponse(response).getResponseId();
         } else {
-            RDate rDate = rDateRepository.findById(postData.getRDateId()).get();
+            RDate rDate = rDateRepository.findById(postData.getResponseDateId()).get();
             response = Response.builder().member(member).type(Type.Date).rDate(rDate).responseData(postData.getResponseData()).build();
             responseId = responseService.addDateResponse(response).getResponseId();
         }

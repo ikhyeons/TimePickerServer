@@ -4,6 +4,7 @@ import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 import com.ikhyeons.tp.time_picker_server.rDate.entity.RDate;
 import com.ikhyeons.tp.time_picker_server.rDay.entity.RDay;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
+import com.ikhyeons.tp.time_picker_server.response.responseDTO.ResponseDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,9 +34,23 @@ public class Response {
     @JoinColumn(name ="r_day_id")
     private RDay rDay;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String responseData;
 
+    public ResponseDTO toDTO(){
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setResponseId(this.responseId);
+        responseDTO.setMemberId(this.member.getMemberId());
+        responseDTO.setResponseData(this.responseData);
+        responseDTO.setType(this.type);
+        if(this.type == Type.Day){
+            responseDTO.setResponseDayId(this.rDay.getRDayId());
+        } else {
+            responseDTO.setResponseDateId(this.rDate.getRDateId());
+        }
+
+        return responseDTO;
+    }
     public static Response createDayResponse(Member member, RDay rDay){
         return Response.builder().member(member).type(Type.Day).rDay(rDay).responseData("{time : 1830}").build();
     }
