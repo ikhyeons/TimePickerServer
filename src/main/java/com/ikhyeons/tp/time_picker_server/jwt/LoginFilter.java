@@ -1,11 +1,13 @@
 package com.ikhyeons.tp.time_picker_server.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ikhyeons.tp.time_picker_server.member.memberDTO.CustomUserDetails;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,8 +15,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -36,7 +41,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication){
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String username = customUserDetails.getUsername();
         Long userId = customUserDetails.getUserId();
@@ -48,6 +53,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String role = auth.getAuthority();
         String token = jwtUtil.createJwt(username, role, userId, 1000 * 60 * 60 * 24 * 30L);
         response.addHeader("Authorization", "Bearer " + token);
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("Access_token", token);
+        response.setStatus(HttpStatus.OK.value());
+        new ObjectMapper().writeValue(response.getOutputStream(), body);
+
     }
 
 
