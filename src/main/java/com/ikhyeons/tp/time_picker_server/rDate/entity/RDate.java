@@ -9,11 +9,13 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
 @ToString
 @NoArgsConstructor
+@JsonIgnoreProperties({"responseList"})
 public class RDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,6 @@ public class RDate {
     @Column(nullable = false)
     private String date;
 
-    @JsonIgnoreProperties
     @OneToMany(mappedBy = "rDate")
     private List<Response> responseList = new ArrayList<>();
 
@@ -43,11 +44,10 @@ public class RDate {
     }
     public RDateDTO toDTO(){
         RDateDTO rDateDTO = new RDateDTO();
-
         rDateDTO.setRDateId(this.rDateId);
         rDateDTO.setDate(this.date);
-        rDateDTO.setRequestId(this.request.getRequestId());
-
+        rDateDTO.setRequest(this.request);
+        rDateDTO.setResponseList(this.responseList.stream().map(data->data.toDTO()).collect(Collectors.toList()));
         return rDateDTO;
     }
     @Builder

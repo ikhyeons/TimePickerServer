@@ -20,7 +20,7 @@ public class RDayController {
 
     @PostMapping("/rDay")
     public Long createRDay(@RequestBody RDayDTO postData){
-        Request request = requestRepository.findById(postData.getRequestId()).get();
+        Request request = requestRepository.findById(postData.getRequest().getRequestId()).get();
         RDay rDay = RDay.builder().request(request).day(postData.getDay()).build();
         RDay savedRDay = rDayService.addRDay(rDay);
         return savedRDay.getRDayId();

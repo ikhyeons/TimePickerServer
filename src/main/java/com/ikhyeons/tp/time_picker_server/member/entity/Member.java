@@ -3,6 +3,7 @@ package com.ikhyeons.tp.time_picker_server.member.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
+import com.ikhyeons.tp.time_picker_server.response.entity.Response;
 import com.ikhyeons.tp.time_picker_server.schedule.entity.Schedule;
 import com.ikhyeons.tp.time_picker_server.team.entity.Team;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @ToString
 @NoArgsConstructor
-@JsonIgnoreProperties({"password", "requestList", "scheduleList", "teamList"})
+@JsonIgnoreProperties({"password", "requestList", "scheduleList", "teamList", "responseList"})
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,13 +40,14 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Request> requestList = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "member")
     private List<Schedule> scheduleList = new ArrayList<>();
 
-    @JsonIgnoreProperties
     @OneToMany(mappedBy = "member")
     private List<Team> teamList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Response> responseList = new ArrayList<>();
 
     //social login
     @Enumerated(EnumType.STRING)

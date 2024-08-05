@@ -18,7 +18,7 @@ public class RDateController {
 
     @PostMapping("/rDate")
     public Long createRDate(@RequestBody RDateDTO postData){
-        Request request = requestRepository.findById(postData.getRequestId()).get();
+        Request request = requestRepository.findById(postData.getRequest().getRequestId()).get();
         RDate rDate = RDate.builder().request(request).date(postData.getDate()).build();
         RDate savedRDate = rDateService.addRDate(rDate);
         return savedRDate.getRDateId();

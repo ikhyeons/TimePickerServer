@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ResponseService {
     private final ResponseRepository responseRepository;
     private final RDateRepository rDateRepository;

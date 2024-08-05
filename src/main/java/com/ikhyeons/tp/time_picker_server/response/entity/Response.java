@@ -1,5 +1,6 @@
 package com.ikhyeons.tp.time_picker_server.response.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 import com.ikhyeons.tp.time_picker_server.rDate.entity.RDate;
 import com.ikhyeons.tp.time_picker_server.rDay.entity.RDay;
@@ -12,6 +13,7 @@ import lombok.*;
 @Entity
 @ToString
 @NoArgsConstructor
+@JsonIgnoreProperties({"rDate", "rDay"})
 public class Response {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,14 +41,15 @@ public class Response {
 
     public ResponseDTO toDTO(){
         ResponseDTO responseDTO = new ResponseDTO();
+
         responseDTO.setResponseId(this.responseId);
-        responseDTO.setMemberId(this.member.getMemberId());
+        responseDTO.setMember(this.member);
         responseDTO.setResponseData(this.responseData);
         responseDTO.setType(this.type);
         if(this.type == Type.Day){
-            responseDTO.setResponseDayId(this.rDay.getRDayId());
+            responseDTO.setResponseDay(this.rDay);
         } else {
-            responseDTO.setResponseDateId(this.rDate.getRDateId());
+            responseDTO.setResponseDate(this.rDate);
         }
 
         return responseDTO;

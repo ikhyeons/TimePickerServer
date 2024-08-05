@@ -41,11 +41,11 @@ public class ResponseController {
 
         System.out.println("postData.toString() = " + postData.toString());
         if(postData.getType() == Type.Day){
-            RDay rDay = rDayRepository.findById(postData.getResponseDayId()).get();
+            RDay rDay = rDayRepository.findById(postData.getResponseDay().getRDayId()).get();
             response = Response.builder().member(member).type(Type.Day).rDay(rDay).responseData(postData.getResponseData()).build();
             responseId = responseService.addDayResponse(response).getResponseId();
         } else {
-            RDate rDate = rDateRepository.findById(postData.getResponseDateId()).get();
+            RDate rDate = rDateRepository.findById(postData.getResponseDate().getRDateId()).get();
             response = Response.builder().member(member).type(Type.Date).rDate(rDate).responseData(postData.getResponseData()).build();
             responseId = responseService.addDateResponse(response).getResponseId();
         }
