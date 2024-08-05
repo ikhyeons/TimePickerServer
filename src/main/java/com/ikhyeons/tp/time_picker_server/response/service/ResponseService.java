@@ -24,6 +24,7 @@ public class ResponseService {
     private final RDayRepository rDayRepository;
 
 
+    @Transactional
     public List<ResponseDTO> getResponseList(Type type, Long id){
         List<Response> responseList;
         if(type == Type.Day){
@@ -36,10 +37,12 @@ public class ResponseService {
         return responseDTOList;
     }
 
+    @Transactional
     public Response addDayResponse(Response response){
         return responseRepository.save(response);
     }
 
+    @Transactional
     public boolean removeDayResponse(Response response){
         try{
             responseRepository.delete(response);
@@ -49,10 +52,12 @@ public class ResponseService {
         }
     }
 
+    @Transactional
     public Response addDateResponse(Response response){
         return responseRepository.save(response);
     }
 
+    @Transactional
     public boolean removeDateResponse(Response response){
         try{
             responseRepository.delete(response);

@@ -1,5 +1,6 @@
 package com.ikhyeons.tp.time_picker_server.request_receiver.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.request.entity.Type;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @ToString
 @NoArgsConstructor
+@JsonIgnoreProperties({"request"})
 public class RequestReceiver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +34,8 @@ public class RequestReceiver {
         ReceiverDTO receiverDTO = new ReceiverDTO();
 
         receiverDTO.setRequestReceiverId(this.requestReceiverId);
-        receiverDTO.setRequestId(this.request.getRequestId());
-        receiverDTO.setMemberId(this.member.getMemberId());
+        receiverDTO.setRequest(this.request);
+        receiverDTO.setMember(this.member);
 
         return receiverDTO;
     }

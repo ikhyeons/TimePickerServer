@@ -9,6 +9,7 @@ import com.ikhyeons.tp.time_picker_server.team.entity.Team;
 import com.ikhyeons.tp.time_picker_server.team.teamDTO.TeamDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public List<ScheduleDTO> getScheduleList(Long memberId){
         Member member = memberRepository.findById(memberId).get();
         List<Schedule> scheduleList = scheduleRepository.findAllByMember(member);
@@ -26,11 +28,12 @@ public class ScheduleService {
         return result;
     }
 
-
+    @Transactional
     public Schedule saveSchedule(Schedule schedule){
         return scheduleRepository.save(schedule);
     }
 
+    @Transactional
     public boolean deleteSchedule(Schedule schedule){
         try{
             scheduleRepository.delete((schedule));

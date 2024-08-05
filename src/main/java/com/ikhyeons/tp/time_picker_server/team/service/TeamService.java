@@ -7,6 +7,7 @@ import com.ikhyeons.tp.time_picker_server.team.repository.TeamRepository;
 import com.ikhyeons.tp.time_picker_server.team.teamDTO.TeamDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,16 +17,19 @@ import java.util.stream.Collectors;
 public class TeamService {
     private final TeamRepository teamRepository;
     private final MemberRepository memberRepository;
+    @Transactional
     public Team saveTeam(Team team){
         return teamRepository.save(team);
     }
 
+    @Transactional
     public List<TeamDTO> getTeamLIst(Long memberId){
         Member member = memberRepository.findById(memberId).get();
         List<Team> teamList = teamRepository.findAllByMember(member);
         List<TeamDTO> result = teamList.stream().map(data->data.toDTO()).collect(Collectors.toList());
         return result;
     }
+    @Transactional
     public boolean deleteTeam(Team team){
         try{
            teamRepository.delete(team);

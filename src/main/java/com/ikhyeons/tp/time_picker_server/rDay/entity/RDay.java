@@ -1,5 +1,6 @@
 package com.ikhyeons.tp.time_picker_server.rDay.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikhyeons.tp.time_picker_server.rDay.rDayDTO.RDayDTO;
 import com.ikhyeons.tp.time_picker_server.request.entity.Request;
 import com.ikhyeons.tp.time_picker_server.request.entity.Type;
@@ -30,6 +31,7 @@ public class RDay {
     @Enumerated(EnumType.STRING)
     private Day day;
 
+    @JsonIgnoreProperties
     @OneToMany(mappedBy = "rDay")
     private List<Response> responseList = new ArrayList<>();
 

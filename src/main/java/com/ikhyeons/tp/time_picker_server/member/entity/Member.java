@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @ToString
 @NoArgsConstructor
+@JsonIgnoreProperties({"password", "requestList", "scheduleList", "teamList"})
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,7 @@ public class Member {
     @Column(unique = true, nullable = false)
     private String mid;
 
+    @JsonIgnoreProperties
     @Column(nullable = false)
     private String password;
 
@@ -33,12 +35,15 @@ public class Member {
     @Column(nullable = false)
     private String role;
 
-    @OneToMany(mappedBy = "member")
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Request> requestList = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "member")
     private List<Schedule> scheduleList = new ArrayList<>();
 
+    @JsonIgnoreProperties
     @OneToMany(mappedBy = "member")
     private List<Team> teamList = new ArrayList<>();
 

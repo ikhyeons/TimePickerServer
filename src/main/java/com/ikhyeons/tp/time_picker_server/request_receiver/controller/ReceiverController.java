@@ -29,12 +29,12 @@ public class ReceiverController {
     public List<RequestDTO> findGetRequest(){
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
         Member member = memberRepository.findOneByMid(memberId).get();
-        return requestReceiverService.findMyGetRequest(member);
+        return requestReceiverService.findMyReceiveRequest(member);
     }
     @PostMapping("/receiver")
     public Long addReceiver(@RequestBody ReceiverDTO postData){
-        Member member = memberRepository.findById(postData.getMemberId()).get();
-        Request request = requestRepository.findById(postData.getRequestId()).get();
+        Member member = memberRepository.findById(postData.getMember().getMemberId()).get();
+        Request request = requestRepository.findById(postData.getRequest().getRequestId()).get();
         RequestReceiver requestReceiver = RequestReceiver.builder().member(member).request(request).build();
         RequestReceiver savedReceiver = requestReceiverService.addRequestReceiver(requestReceiver);
         return savedReceiver.getRequestReceiverId();

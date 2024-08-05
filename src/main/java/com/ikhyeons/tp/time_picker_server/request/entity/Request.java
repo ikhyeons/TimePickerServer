@@ -1,5 +1,6 @@
 package com.ikhyeons.tp.time_picker_server.request.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikhyeons.tp.time_picker_server.member.entity.Member;
 import com.ikhyeons.tp.time_picker_server.member.entity.Role;
 import com.ikhyeons.tp.time_picker_server.member.entity.SocialType;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Entity
 @ToString
 @NoArgsConstructor
+@JsonIgnoreProperties({"receiverList", "dayList", "dateList"})
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +66,7 @@ public class Request {
     public RequestDTO toDTO(){
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setRequestId(this.requestId);
-        requestDTO.setMemberId(this.member.getMemberId());
+        requestDTO.setMember(this.member);
         requestDTO.setTitle(this.title);
         requestDTO.setDescription(this.description);
         requestDTO.setDeadline(this.deadline);
@@ -72,7 +74,7 @@ public class Request {
         requestDTO.setType(this.type);
         requestDTO.setDayList(this.dayList.stream().map(data -> data.toDTO()).collect(Collectors.toList()));
         requestDTO.setDateList(this.dateList.stream().map(data->data.toDTO()).collect(Collectors.toList()));
-        requestDTO.setReceiverIdList(this.receiverList.stream().map(data->data.getRequestReceiverId()).collect(Collectors.toList()));
+        requestDTO.setReceiverList(this.receiverList.stream().map(data->data.toDTO()).collect(Collectors.toList()));
         requestDTO.setResult(this.result);
 
         return requestDTO;

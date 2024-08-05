@@ -21,17 +21,19 @@ public class RequestReceiverService {
 
 
     @Transactional
-    public List<RequestDTO> findMyGetRequest(Member member){
+    public List<RequestDTO> findMyReceiveRequest(Member member){
         List<RequestReceiver> requestReceiverList = requestReceiverRepository.findAllByMember(member);
         List<Request> requestList = requestReceiverList.stream().map(data->data.getRequest()).collect(Collectors.toList());
         List<RequestDTO> requestDTOList = requestList.stream().map(data->data.toDTO()).collect(Collectors.toList());
         return requestDTOList;
     }
+    @Transactional
     public RequestReceiver addRequestReceiver(RequestReceiver requestReceiver){
         RequestReceiver savedRequestReceiver = requestReceiverRepository.save(requestReceiver);
         savedRequestReceiver.getRequest().addReceiver(requestReceiver);
         return savedRequestReceiver;
     }
+    @Transactional
     public boolean deleteRequestReceiver(RequestReceiver requestReceiver){
         try{
             requestReceiver.getRequest().deleteReceiver(requestReceiver);

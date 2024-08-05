@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class ReceiverDTO {
     private Long requestReceiverId;
-    private Long requestId;
-    private Long memberId;
-
+    private Request request;
+    private Member member;
 }

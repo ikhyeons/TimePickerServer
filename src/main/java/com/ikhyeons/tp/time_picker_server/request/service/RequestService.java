@@ -23,10 +23,12 @@ public class RequestService {
         List<RequestDTO> requestDTO = requestList.stream().map(data->data.toDTO()).collect(Collectors.toList());
         return requestDTO;
     }
+    @Transactional
     public Request createRequest(Request request){
         return requestRepository.save(request);
     }
 
+    @Transactional
     public Request cancelRequest(Request request){
         request.cancelRequest();
         return requestRepository.save(request);
