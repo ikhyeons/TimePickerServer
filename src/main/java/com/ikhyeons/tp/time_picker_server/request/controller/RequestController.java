@@ -87,7 +87,7 @@ public class RequestController {
         }
         Request savedRequest = requestService.createRequest(request);
 
-        List<Long> receiverIdList = postData.getReceiverList().stream().map(data->data.getRequestReceiverId()).collect(Collectors.toList());
+        List<Long> receiverIdList = postData.getReceiverIdList();
         List<Member> receiverMemberList = memberRepository.findAllById(receiverIdList);
         List<RequestReceiver> receiverList = receiverMemberList.stream().map(receiverMember -> receiverDTOtoReceiver(request.getRequestId(), receiverMember.getMemberId())).collect(Collectors.toList());
         requestReceiverRepository.saveAll(receiverList);

@@ -28,6 +28,8 @@ public class RequestDTO {
 
     private List<ReceiverDTO> receiverList;
 
+    private List<Long> receiverIdList;
+
     private List<RDayDTO> dayList;
 
     private List<RDateDTO> dateList;
