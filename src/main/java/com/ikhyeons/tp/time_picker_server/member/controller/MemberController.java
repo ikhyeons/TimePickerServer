@@ -19,10 +19,14 @@ import java.util.Objects;
 public class MemberController {
     private final MemberService memberService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping("/member/find")
+    public Member findMember(@RequestParam("mid") String mid){
+        return memberService.findMember(mid);
+    }
     @GetMapping("/member/checkDuplicate")
     public boolean checkDuplicate(@RequestParam("mid") String mid){
-        boolean isDuplicated = memberService.checkDuplication(mid);
-        return isDuplicated;
+        return memberService.checkDuplication(mid);
     }
 
     @PostMapping("/member/join")

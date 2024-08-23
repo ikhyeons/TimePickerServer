@@ -15,6 +15,13 @@ public class MemberService implements IMemberService{
 
     @Override
     @Transactional
+    public Member findMember(String mid){
+        return memberRepository.findOneByMid(mid).get();
+    }
+
+
+    @Override
+    @Transactional
     public Member join(Member member){
         return memberRepository.save(member);
     }
