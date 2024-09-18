@@ -36,6 +36,7 @@ class ResponseServiceTest {
         Response dayResponse = Response.createDayResponse(ikhyeon, rDay);
         //when
         Response savedDayResponse = responseService.addDayResponse(dayResponse);
+        dayResponse.getRDay().addResponse(dayResponse);
         //then
         assertThat(responseRepository.findById(savedDayResponse.getResponseId()).isPresent()).isTrue();
         assertThat(dayResponse.getRDay().getResponseList().size()).isEqualTo(1);
@@ -53,8 +54,11 @@ class ResponseServiceTest {
         Response dayResponse2 = Response.createDayResponse(ikhyeon, rDay2);
         Response savedDayResponse1 = responseService.addDayResponse(dayResponse1);
         Response savedDayResponse2 = responseService.addDayResponse(dayResponse2);
+        dayResponse1.getRDay().addResponse(dayResponse1);
+        dayResponse2.getRDay().addResponse(dayResponse2);
         //when
         responseService.removeDayResponse(savedDayResponse1);
+        savedDayResponse1.getRDay().deleteResponse(dayResponse1);
         //then
         assertThat(responseRepository.findById(savedDayResponse1.getResponseId()).isPresent()).isFalse();
         assertThat(responseRepository.findById(savedDayResponse2.getResponseId()).isPresent()).isTrue();
@@ -71,6 +75,7 @@ class ResponseServiceTest {
         Response dateResponse = Response.createDateResponse(ikhyeon, rDate);
         //when
         Response savedDateResponse = responseService.addDateResponse(dateResponse);
+        dateResponse.getRDate().addResponse(dateResponse);
         //then
         assertThat(responseRepository.findById(savedDateResponse.getResponseId()).isPresent()).isTrue();
         assertThat(dateResponse.getRDate().getResponseList().size()).isEqualTo(1);
@@ -88,8 +93,11 @@ class ResponseServiceTest {
         Response dateResponse2 = Response.createDateResponse(ikhyeon, rDate2);
         Response savedDateResponse1 = responseService.addDateResponse(dateResponse1);
         Response savedDateResponse2 = responseService.addDateResponse(dateResponse2);
+        dateResponse1.getRDate().addResponse(dateResponse1);
+        dateResponse2.getRDate().addResponse(dateResponse2);
         //when
         responseService.removeDayResponse(savedDateResponse1);
+        savedDateResponse1.getRDate().deleteResponse(dateResponse1);
         //then
         assertThat(responseRepository.findById(savedDateResponse1.getResponseId()).isPresent()).isFalse();
         assertThat(responseRepository.findById(savedDateResponse2.getResponseId()).isPresent()).isTrue();

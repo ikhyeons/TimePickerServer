@@ -27,11 +27,11 @@ public class Friend {
     private Long friendId;
 
     @ManyToOne
-    @JoinColumn(name = "request_id")
+    @JoinColumn(name = "memberOne_id")
     private Member one;
 
     @ManyToOne
-    @JoinColumn(name = "request_id")
+    @JoinColumn(name = "memberTwo_id")
     private Member two;
 
     public static Friend createFriendFair(Member one, Member two){

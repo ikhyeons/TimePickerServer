@@ -16,7 +16,7 @@ public class FriendController {
     private final RDayRepository rDayRepository;
     private final RequestRepository requestRepository;
 
-    @PostMapping("/rDay")
+    @PostMapping("/friend")
     public Long createRDay(@RequestBody RDayDTO postData){
         Request request = requestRepository.findById(postData.getRequest().getRequestId()).get();
         RDay rDay = RDay.builder().request(request).day(postData.getDay()).build();
@@ -24,7 +24,7 @@ public class FriendController {
         return savedRDay.getRDayId();
     }
 
-    @DeleteMapping("/rDay")
+    @DeleteMapping("/friend")
     public boolean deleteRDay(@RequestParam Long rDayId){
         RDay rDay = rDayRepository.findById(rDayId).get();
         boolean isDelete = rDayService.removeRDay(rDay);
